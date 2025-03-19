@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Daily PeXPhoto</title>
+    <style>
+        :root {
+            --spacing-unit: 1.5rem;
+            --rounded-corner: 8px;
+            --accent-color: #99BC85;
+            /* Verde suave de la paleta */
+            --background-dark: #1a1a1a;
+            /* Fondo oscuro */
+            --text-light: #FDFAF6;
+            /* Texto claro */
+            --card-background: #2a2a2a;
+            /* Fondo de tarjetas */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --background-light: #FAF1E6;
+            /* Fondo claro */
+            --text-dark: #1a1a1a;
+            /* Texto oscuro */
+        }
+
+        body {
+            background: linear-gradient(135deg, #E9F5DB, #B5C99A);
+            /* Degradado suave y natural */
+            color: var(--text-dark);
+            font-family: 'DM Mono', monospace;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        body[data-theme="dark"] {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            /* Degradado oscuro para modo oscuro */
+            color: var(--text-light);
+        }
+
+        main.container {
+            padding: var(--spacing-unit);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        article {
+            background-color: var(--card-background);
+            border-radius: var(--rounded-corner);
+            padding: var(--spacing-unit);
+            margin-bottom: var(--spacing-unit);
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s;
+        }
+
+        body[data-theme="dark"] article {
+            background-color: #2a2a2a;
+            /* Fondo oscuro para tarjetas en modo oscuro */
+        }
+
+        body[data-theme="light"] article {
+            background-color: #FFFFFF;
+            /* Fondo blanco para tarjetas en modo claro */
+        }
+
+        h1 {
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: var(--spacing-unit);
+            font-weight: 500;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            border-radius: var(--rounded-corner);
+            max-width: 100%;
+            height: auto;
+            box-shadow: var(--shadow);
+        }
+
+        .photographer-info {
+            text-align: center;
+            margin-top: var(--spacing-unit);
+        }
+
+        .photographer-info h2 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .photographer-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .photographer-info a:hover {
+            color: #E4EFE7;
+            /* Color claro al hacer hover */
+            text-decoration: underline;
+            transform: translateY(-2px);
+            /* Animación suave */
+        }
+
+        .photo-title {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            /* Color oscuro para el título en modo claro */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        body[data-theme="dark"] .photo-title {
+            color: var(--text-light);
+            /* Color claro para el título en modo oscuro */
+        }
+
+        .photo-title span {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: var(--rounded-corner);
+            padding: 0.5rem 1rem;
+            font-family: 'DM Mono', monospace;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body[data-theme="dark"] .theme-toggle {
+            background-color: var(--text-dark);
+            color: var(--background-light);
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <button class="theme-toggle" id="theme-toggle">🌙 Dark Mode</button>
+
+    <main class="container">
+        <article>
+            <h1 class="photo-title">Photo of the <span>Hour</span></h1>
+            <img src="{{.Src}}" alt="{{.Alt}}" />
+        </article>
+
+        <article class="photographer-info">
+            <h2>Photographer: {{.Photographer}}</h2>
+            <p><a href="{{.Photographer_url}}">Visit Photographer's Profile</a></p>
+        </article>
+    </main>
+
+    <script>
+        // Cambiar tema
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            const isDarkMode = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDarkMode ? 'light' : 'dark');
+            themeToggle.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+    </script>
+</body>
+
+</html>
