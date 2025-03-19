@@ -9,8 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 //go:embed templates/*
@@ -111,15 +109,12 @@ func mainView(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
+	port := os.Getenv("PORT")
 
 	http.HandleFunc("/", mainView)
 
-	fmt.Println("Server starting on :8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	fmt.Println("Server starting on port: ", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatal("Couldn't start server on port :8080")
 	}
 }
